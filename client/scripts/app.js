@@ -51,7 +51,7 @@ $(document).ready(function() {
 
 });
 
-var server = 'https://api.parse.com/1/classes/chatterbox';
+var server = 'http://127.0.0.1:3000/classes/chatterbox';
 var rooms = {};
 var currentRoom;
 var friends = {};
@@ -72,7 +72,7 @@ var sendMessage = function(message) {
 
 var fetch = function(callback) {
   $.get(server, { order: "-createdAt" }, function(data) {
-    callback(data.results);
+    callback(JSON.parse(data).results);
   });
 };
 
@@ -87,7 +87,7 @@ var display = function(messages) {
   var room = '<a href= "#" class="room"></a>';
   var friendButton = '<a href="#" class="addfriend" title="Add friend">+</a>';
 
-  for(var i = 0; i < 100; i++){
+  for(var i = 0; i < Math.min(100, messages.length); i++){
     // populate each individual chat
     var msg = messages[i];
     var messageToAppend;
